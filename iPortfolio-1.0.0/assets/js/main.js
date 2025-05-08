@@ -219,21 +219,71 @@
    * Navmenu Scrollspy
    */
   let navmenulinks = document.querySelectorAll('.navmenu a');
+  let currentSection = null;
+
+  function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const threshold = 0.3; // 30% of the section needs to be visible
+
+    return (
+      rect.top <= windowHeight * (1 - threshold) &&
+      rect.bottom >= windowHeight * threshold
+    );
+  }
+
+  function updateActiveNavLink(sectionId) {
+    if (currentSection === sectionId) return;
+    currentSection = sectionId;
+    
+    navmenulinks.forEach(link => {
+      if (link.getAttribute('href') === `#${sectionId}`) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
 
   function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
+    const sections = document.querySelectorAll('section[id]');
+    let found = false;
+
+    sections.forEach(section => {
+      if (isElementInViewport(section)) {
+        updateActiveNavLink(section.id);
+        found = true;
       }
-    })
+    });
+
+    // If no section is in viewport, keep the last active section
+    if (!found && currentSection) {
+      const lastSection = document.getElementById(currentSection);
+      if (lastSection && !isElementInViewport(lastSection)) {
+        updateActiveNavLink(currentSection);
+      }
+    }
   }
+
+  // Add click handler for navigation links
+  navmenulinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href').substring(1);
+      updateActiveNavLink(targetId);
+    });
+  });
+
+  // Throttle scroll event for better performance
+  let scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (!scrollTimeout) {
+      scrollTimeout = setTimeout(function() {
+        navmenuScrollspy();
+        scrollTimeout = null;
+      }, 100);
+    }
+  });
+
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
@@ -381,10 +431,17 @@
         
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
+          // Add a small delay to ensure proper scrolling
+          setTimeout(() => {
+            const headerOffset = 100; // Increased offset to ensure section is fully visible
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }, 100);
         }
       });
     });
