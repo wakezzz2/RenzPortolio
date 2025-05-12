@@ -281,7 +281,7 @@
         navmenuScrollspy();
         scrollTimeout = null;
       }, 100);
-    }
+      }
   });
 
   window.addEventListener('load', navmenuScrollspy);
@@ -437,10 +437,10 @@
             const elementPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            window.scrollTo({
+          window.scrollTo({
               top: offsetPosition,
-              behavior: 'smooth'
-            });
+            behavior: 'smooth'
+          });
           }, 100);
         }
       });
@@ -578,6 +578,38 @@
         item.style.opacity = '1';
         item.style.transform = 'scale(1)';
       });
+    }
+  });
+
+  // Responsive Portfolio Filters Dropdown (for <=600px)
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.querySelector('.portfolio-filters-dropdown');
+    var toggle = document.querySelector('.portfolio-filters-toggle');
+    var filters = document.querySelectorAll('.portfolio-filters li');
+    if (dropdown && toggle) {
+      // Toggle dropdown
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+      });
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('active');
+        }
+      });
+      // Update button text and close dropdown on filter select
+      filters.forEach(function(filter) {
+        filter.addEventListener('click', function() {
+          toggle.querySelector('span').textContent = this.textContent;
+          dropdown.classList.remove('active');
+        });
+      });
+      // Set initial button text
+      var active = dropdown.querySelector('.filter-active');
+      if (active) {
+        toggle.querySelector('span').textContent = active.textContent;
+      }
     }
   });
 
