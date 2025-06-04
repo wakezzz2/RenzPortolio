@@ -80,7 +80,7 @@ body.dark-mode {
   height: 100%;
   opacity: 0.05;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23149ddd' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23149ddd' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Simplified Section Styling */
@@ -3797,7 +3797,7 @@ body.dark-mode .btn-demo:hover {
 }
 
 .contact-card:hover .contact-glow {
-  opacity: 1;
+    opacity: 1;
 }
 
 .contact-social {
@@ -4344,7 +4344,7 @@ body.dark-mode .btn-demo:hover {
 }
 
 .skill-card:hover .skill-info p {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* Dark mode enhancements */
@@ -4363,4 +4363,193 @@ body.dark-mode .skill-info h4 {
 
 body.dark-mode .skill-info p {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* Certifications Section */
+.certifications .cert-card {
+  position: relative;
+  background: rgba(20, 20, 30, 0.8);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.certifications .cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+.certifications .cert-card img {
+  width: 100%;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+.certifications .cert-card:hover img {
+  transform: scale(1.05);
+}
+
+.certifications .cert-info {
+  padding: 20px;
+  background: linear-gradient(to top, rgba(20, 20, 30, 0.95), transparent);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+}
+
+.certifications .cert-card:hover .cert-info {
+  transform: translateY(0);
+}
+
+.certifications .cert-info h4 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.certifications .cert-info p {
+  color: #0ea2bd;
+  font-size: 14px;
+  margin: 0;
+}
+
+.certifications .tech-border {
+  border: 2px solid rgba(0, 123, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.certifications .tech-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0ea2bd, #0056b3);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.certifications .cert-card:hover .tech-border::before {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .certifications .cert-info {
+    transform: translateY(0);
+    background: rgba(20, 20, 30, 0.9);
+  }
+}
+
+/* Certifications Carousel Styles */
+#certificationsCarousel {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(20, 20, 30, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.1);
+}
+
+#certificationsCarousel .carousel-item {
+  padding: 20px;
+}
+
+#certificationsCarousel .cert-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#certificationsCarousel .cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+}
+
+#certificationsCarousel .carousel-control-prev,
+#certificationsCarousel .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+#certificationsCarousel .carousel-control-prev {
+  left: -25px;
+}
+
+#certificationsCarousel .carousel-control-next {
+  right: -25px;
+}
+
+#certificationsCarousel .carousel-control-prev:hover,
+#certificationsCarousel .carousel-control-next:hover {
+  background: rgba(0, 123, 255, 0.4);
+  opacity: 1;
+}
+
+#certificationsCarousel .carousel-indicators {
+  bottom: -40px;
+}
+
+#certificationsCarousel .carousel-indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 123, 255, 0.3);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#certificationsCarousel .carousel-indicators button.active {
+  background-color: rgba(0, 123, 255, 0.8);
+  transform: scale(1.2);
+}
+
+/* Dark mode styles */
+body.dark-mode #certificationsCarousel {
+  background: rgba(20, 20, 30, 0.4);
+}
+
+body.dark-mode #certificationsCarousel .carousel-control-prev,
+body.dark-mode #certificationsCarousel .carousel-control-next {
+  background: rgba(0, 123, 255, 0.15);
+}
+
+body.dark-mode #certificationsCarousel .carousel-control-prev:hover,
+body.dark-mode #certificationsCarousel .carousel-control-next:hover {
+  background: rgba(0, 123, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  #certificationsCarousel {
+    padding: 10px;
+  }
+  
+  #certificationsCarousel .carousel-control-prev,
+  #certificationsCarousel .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+  
+  #certificationsCarousel .carousel-control-prev {
+    left: -20px;
+  }
+  
+  #certificationsCarousel .carousel-control-next {
+    right: -20px;
+  }
 }
