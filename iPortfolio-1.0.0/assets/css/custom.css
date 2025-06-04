@@ -2,22 +2,32 @@
 
 /* CSS Variables for Theme */
 :root {
-  --accent-color: #149ddd;
+  --bg-color: #0a192f;
+  --text-color: #e6f1ff;
+  --accent-color: #64ffda;
+  --accent-color-rgb: 100, 255, 218;
+  --border-color: rgba(100, 255, 218, 0.1);
+  --card-bg: rgba(2, 12, 27, 0.7);
+  --hover-color: rgba(100, 255, 218, 0.1);
+  --section-bg: rgba(2, 12, 27, 0.9);
+  --overlay-color: rgba(10, 25, 47, 0.85);
   --heading-color: #173b6c;
   --default-color: #444444;
   --background-color: #ffffff;
-  --text-color: #444444;
   --accent-hover: #0056b3;
   --light-bg: #f5f5f5;
-  --card-bg: #ffffff;
-  --border-color: rgba(0, 0, 0, 0.1);
-  --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  --heading-text: #333333;
   --tech-border-color: rgba(20, 157, 221, 0.2);
-  --accent-color-rgb: 20, 157, 221;
   --terminal-bg: #0e1628;
   --terminal-text: #26e277;
   --terminal-header: #1e2233;
+  --heading-text: #333333;
+  --tech-border-color: rgba(48, 166, 230, 0.3);
+  --accent-color-rgb: 48, 166, 230;
+  --terminal-bg: #0e1628;
+  --terminal-text: #26e277;
+  --terminal-header: #1a1a2e;
+  --form-bg: #1d2a43;
+  --form-focus: #2e4372;
 }
 
 /* Dark Mode Variables */
@@ -57,6 +67,8 @@ body.dark-mode {
   position: relative;
   overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--section-bg);
+  padding: 60px 0;
 }
 
 .section::before {
@@ -118,10 +130,12 @@ body.dark-mode .section-title p {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Dark Mode Toggle */
+/* Dark Mode Toggle Enhancement */
 .dark-mode-toggle {
-  margin: 15px auto;
-  text-align: center;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
 }
 
 .toggle-switch {
@@ -139,67 +153,166 @@ body.dark-mode .section-title p {
 
 .toggle-label {
   position: relative;
-  display: block;
-  width: 60px;
-  height: 30px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--accent-color);
-  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  width: 65px;
+  height: 32px;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+}
+
+.toggle-label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(var(--accent-color-rgb), 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.toggle-label:hover::before {
+  transform: translateX(100%);
 }
 
 .toggle-slider {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 22px;
-  height: 22px;
-  background-color: var(--accent-color);
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  background: var(--accent-color);
   border-radius: 50%;
-  transition: all 0.4s ease;
-  z-index: 2;
-  box-shadow: 0 0 8px rgba(20, 157, 221, 0.7);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.toggle-label:hover .toggle-slider::before {
+  width: 20px;
+  height: 20px;
+  opacity: 0.2;
 }
 
 .toggle-input:checked + .toggle-label .toggle-slider {
-  transform: translateX(30px);
+  transform: translateX(33px);
+  background: #2a2a2a;
 }
 
 .light-icon, .dark-icon {
-  position: absolute;
-  top: 5px;
-  font-size: 16px;
-  transition: all 0.4s ease;
+  color: var(--accent-color);
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .light-icon {
   left: 6px;
   color: #FFD700;
   opacity: 1;
+  transform: rotate(0deg);
+  transition: all 0.4s ease;
 }
 
 .dark-icon {
   right: 6px;
   color: #C0C0C0;
   opacity: 0.7;
+  transform: rotate(0deg);
+  transition: all 0.4s ease;
 }
 
 .toggle-input:checked + .toggle-label .light-icon {
   opacity: 0.7;
+  transform: rotate(-180deg);
 }
 
 .toggle-input:checked + .toggle-label .dark-icon {
   opacity: 1;
+  transform: rotate(180deg);
 }
 
 .toggle-label:hover {
-  background-color: rgba(20, 157, 221, 0.1);
+  background: rgba(var(--accent-color-rgb), 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.2);
 }
 
 .toggle-label:hover .toggle-slider {
-  box-shadow: 0 0 12px rgba(20, 157, 221, 1);
+  box-shadow: 0 0 12px rgba(var(--accent-color-rgb), 0.4);
+}
+
+/* Dark mode specific enhancements */
+body.dark-mode .toggle-label {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .toggle-label:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .toggle-slider {
+  background: #2a2a2a;
+}
+
+body.dark-mode .toggle-label:hover .toggle-slider {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.toggle-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border-radius: 50px;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.toggle-label:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
 
 /* Simplified Card Styles */
@@ -244,10 +357,11 @@ body.dark-mode .connect-item:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(20, 157, 221, 0.1);
+  background: rgba(2, 12, 27, 0.8);
   border-radius: 10px;
   margin-right: 15px;
   transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
 }
 
 .tech-icon i {
@@ -470,6 +584,8 @@ body.dark-mode .matrix-code {
 /* Portfolio Cards */
 .portfolio-card {
   overflow: visible;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
 }
 
 .portfolio-img {
@@ -484,17 +600,20 @@ body.dark-mode .matrix-code {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: var(--card-bg);
 }
 
 .portfolio-info h4 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 8px;
+  color: var(--text-color);
 }
 
 .portfolio-info p {
   font-size: 14px;
   margin-bottom: 15px;
+  color: rgba(230, 241, 255, 0.7);
 }
 
 .portfolio-links {
@@ -513,21 +632,15 @@ body.dark-mode .matrix-code {
   font-weight: 500;
   position: relative;
   z-index: 15;
-}
-
-.github-link {
-  background: #f5f5f5;
-  color: #333;
-}
-
-.demo-link {
-  background: var(--accent-color);
-  color: white;
+  background: rgba(2, 12, 27, 0.8);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
 }
 
 .github-link:hover, .demo-link:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: var(--hover-color);
 }
 
 .github-link:hover {
@@ -548,13 +661,13 @@ body.dark-mode .matrix-code {
 .tech-card {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
 }
@@ -587,9 +700,11 @@ body.dark-mode .matrix-code {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(20, 157, 221, 0.1);
+  background: rgba(2, 12, 27, 0.8);
   border-radius: 10px;
   margin-right: 15px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
   position: relative;
   z-index: 1;
 }
@@ -836,12 +951,13 @@ body.dark-mode .matrix-code {
 /* About Section Enhancements */
 .about .content {
   position: relative;
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 25px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
+  color: var(--text-color);
 }
 
 .about .content:hover {
@@ -1112,7 +1228,7 @@ body.dark-mode .matrix-code {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--card-bg);
   position: relative;
   z-index: 2;
   height: calc(100% - 220px);
@@ -1206,7 +1322,7 @@ body.dark-mode .matrix-code {
 
 .demo-link:hover {
   background: var(--accent-hover);
-  border-color: var(--accent-hover);
+  color: white;
 }
 
 .github-link i, .demo-link i {
@@ -1984,7 +2100,7 @@ body.dark-mode .skill .val {
 }
 
 body.dark-mode .tech-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -1997,7 +2113,7 @@ body.dark-mode .tech-icon i {
 }
 
 body.dark-mode .tech-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -2173,11 +2289,6 @@ body.dark-mode .connect-form .form-control:focus {
   box-shadow: 0 0 10px rgba(48, 166, 230, 0.5);
 }
 
-body.dark-mode .connect-form .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-/* Form glow effect - for both light and dark modes */
 .form-glow {
   transition: all 0.3s ease;
 }
@@ -2382,7 +2493,7 @@ body.dark-mode .btn-submit:hover {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--card-bg);
   position: relative;
   z-index: 2;
   height: calc(100% - 220px);
@@ -4112,4 +4223,144 @@ body.dark-mode .btn-demo:hover {
     background: rgba(var(--accent-color-rgb), 0.06);
     color: var(--accent-color);
   }
+}
+
+/* Skills Section Styling */
+.skills-category {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  color: var(--accent-color);
+  font-size: 22px;
+  margin-bottom: 25px;
+  position: relative;
+  padding-left: 15px;
+}
+
+.category-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+.skills-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.skill-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(var(--accent-color-rgb), 0.1), 
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-color);
+}
+
+.skill-card:hover::before {
+  transform: translateX(100%);
+}
+
+.skill-card .tech-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border-radius: 12px;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover .tech-icon {
+  background: var(--accent-color);
+}
+
+.skill-card .tech-icon i {
+  font-size: 24px;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover .tech-icon i {
+  color: white;
+  transform: scale(1.2);
+}
+
+.skill-info {
+  flex: 1;
+}
+
+.skill-info h4 {
+  color: var(--heading-color);
+  font-size: 18px;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+}
+
+.skill-info p {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover .skill-info h4 {
+  color: var(--accent-color);
+}
+
+.skill-card:hover .skill-info p {
+  opacity: 1;
+}
+
+/* Dark mode enhancements */
+body.dark-mode .skill-card {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .skill-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .skill-info h4 {
+  color: #fff;
+}
+
+body.dark-mode .skill-info p {
+  color: rgba(255, 255, 255, 0.7);
 }

@@ -1,0 +1,411 @@
+/* Modern Tech Theme Styles */
+
+/* Root Variables */
+:root {
+  --bg-color: #0a1929;
+  --text-color: #e6f1ff;
+  --accent-color: #00f5d4;
+  --accent-color-rgb: 0, 245, 212;
+  --accent-hover: #00b4d8;
+  --border-color: rgba(0, 245, 212, 0.1);
+  --card-bg: rgba(13, 25, 48, 0.7);
+  --hover-color: rgba(0, 245, 212, 0.1);
+  --section-bg: rgba(10, 25, 41, 0.95);
+  --overlay-color: rgba(10, 25, 47, 0.85);
+  --heading-color: #00f5d4;
+  --terminal-bg: #0e1628;
+  --terminal-text: #00f5d4;
+  --terminal-header: #1a1a2e;
+  --form-bg: #1d2a43;
+  --form-focus: #2e4372;
+  --card-shadow: 0 8px 32px rgba(0, 245, 212, 0.15);
+  --tech-border-color: rgba(0, 245, 212, 0.3);
+  --heading-text: #e6f1ff;
+  --light-bg: rgba(13, 25, 48, 0.5);
+}
+
+/* Base Styles */
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Modern Section Styling */
+.section {
+  position: relative;
+  padding: 80px 0;
+  background: var(--section-bg);
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(var(--accent-color-rgb), 0.03) 1px,
+    transparent 1px
+  ),
+  linear-gradient(
+    90deg,
+    rgba(var(--accent-color-rgb), 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Modern Card Design */
+.tech-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 25px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(var(--accent-color-rgb), 0.03),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tech-card:hover::before {
+  transform: translateX(100%);
+}
+
+/* Holographic Section Headers */
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title h2 {
+  position: relative;
+  color: var(--heading-text);
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  display: inline-block;
+}
+
+.section-title h2::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(var(--accent-color-rgb), 0.8),
+    transparent
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: blur(1px);
+  animation: hologram 3s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes hologram {
+  0%, 100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+}
+
+/* Glowing Borders */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--accent-color),
+    transparent
+  ) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* Modern Button Styles */
+.tech-btn {
+  background: transparent;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tech-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  transform: translateX(-100%) rotate(45deg);
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+
+.tech-btn:hover {
+  color: var(--bg-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.3);
+}
+
+.tech-btn:hover::before {
+  transform: translateX(0) rotate(45deg);
+}
+
+/* Neon Text Effect */
+.neon-text {
+  color: var(--accent-color);
+  text-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.5),
+               0 0 20px rgba(var(--accent-color-rgb), 0.3),
+               0 0 30px rgba(var(--accent-color-rgb), 0.1);
+}
+
+/* Modern Form Inputs */
+.tech-input {
+  background: rgba(13, 25, 48, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  padding: 12px 20px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.tech-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(var(--accent-color-rgb), 0.2);
+  transform: translateY(-2px);
+  background: rgba(13, 25, 48, 0.9);
+}
+
+/* Progress Bars */
+.tech-progress {
+  height: 6px;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tech-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg,
+    var(--accent-color),
+    var(--accent-hover)
+  );
+  border-radius: 3px;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.tech-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: progress-shine 2s linear infinite;
+}
+
+@keyframes progress-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Certification Card Styles */
+.cert-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+  border: 1px solid var(--border-color);
+}
+
+.cert-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-color-rgb), 0),
+    rgba(var(--accent-color-rgb), 0.03) 40%,
+    rgba(var(--accent-color-rgb), 0) 60%
+  );
+  transform: rotate(-45deg) translateY(-50%) translateX(-50%) scale(0);
+  opacity: 0;
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-color);
+}
+
+.cert-card:hover::before {
+  transform: rotate(-45deg) translateY(0) translateX(0) scale(1);
+  opacity: 1;
+}
+
+.cert-card img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s ease;
+}
+
+.cert-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Carousel Navigation */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background: var(--accent-color);
+}
+
+.cert-carousel-container:hover .carousel-control-prev,
+.cert-carousel-container:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.carousel-indicators {
+  margin-bottom: -30px;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 28px;
+  }
+  
+  .tech-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title h2 {
+    font-size: 24px;
+  }
+  
+  .tech-btn {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+} 

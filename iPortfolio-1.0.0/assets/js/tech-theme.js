@@ -3,247 +3,70 @@
  * Additional interactive technology-themed elements for portfolio
  */
 
+// Dark theme specific features and animations
 document.addEventListener('DOMContentLoaded', function() {
-  // Dark mode toggle functionality
-  const bodyElement = document.getElementById('page-body');
-  const darkModeToggle = document.getElementById('dark-mode-toggle');
-  
-  // Check for saved theme preference or use preferred color scheme
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    bodyElement.classList.add('dark-mode');
-    if (darkModeToggle) {
-      darkModeToggle.checked = true;
-    }
-  } else if (savedTheme === 'light') {
-    bodyElement.classList.remove('dark-mode');
-    if (darkModeToggle) {
-      darkModeToggle.checked = false;
-    }
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    bodyElement.classList.add('dark-mode');
-    if (darkModeToggle) {
-      darkModeToggle.checked = true;
-    }
-  }
-  
-  // Add event listener to theme toggle
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener('change', function() {
-      if (this.checked) {
-        bodyElement.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        bodyElement.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-      }
-    });
-  }
-  
-  // Add dark mode toggle switch to sidebar if it doesn't exist
-  const navMenu = document.querySelector('.navmenu');
-  if (navMenu && !document.querySelector('.dark-mode-toggle')) {
-    const toggleContainer = document.createElement('div');
-    toggleContainer.className = 'dark-mode-toggle';
-    toggleContainer.innerHTML = `
-      <span class="toggle-switch">
-        <input type="checkbox" id="dark-mode-toggle" class="toggle-input">
-        <label for="dark-mode-toggle" class="toggle-label">
-          <span class="toggle-slider"></span>
-          <i class="bi bi-sun light-icon"></i>
-          <i class="bi bi-moon-stars dark-icon"></i>
-        </label>
-      </span>
-    `;
-    
-    navMenu.parentNode.insertBefore(toggleContainer, navMenu.nextSibling);
-    
-    // Reapply event listener
-    const newToggle = document.getElementById('dark-mode-toggle');
-    if (newToggle) {
-      // Set initial state
-      if (bodyElement.classList.contains('dark-mode')) {
-        newToggle.checked = true;
-      }
-      
-      newToggle.addEventListener('change', function() {
-        if (this.checked) {
-          bodyElement.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          bodyElement.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    }
-  }
-  
-  // Custom typewriter effect for the About section terminal
-  const typewriterElement = document.getElementById('typewriter-text');
-  if (typewriterElement) {
-    const originalText = typewriterElement.textContent.trim();
-    typewriterElement.textContent = '';
-    
-    // Add blinking cursor
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
-    typewriterElement.appendChild(cursor);
-    
-    // Typewriter effect function
-    let charIndex = 0;
-    function typeEffect() {
-      if (charIndex < originalText.length) {
-        if (typewriterElement.childNodes.length === 1) {
-          // Insert text node before cursor
-          typewriterElement.insertBefore(document.createTextNode(''), cursor);
-        }
-        
-        // Add next character
-        typewriterElement.firstChild.textContent += originalText.charAt(charIndex);
-        charIndex++;
-        
-        // Random typing speed for more realistic effect
-        setTimeout(typeEffect, Math.random() * 50 + 30);
-      }
-    }
-    
-    // Start typing when element is in viewport
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(typeEffect, 500);
-          observer.disconnect();
-        }
-      });
-    });
-    
-    observer.observe(typewriterElement);
-  }
-  
-  // Animation for terminal effect elements
-  const terminalElements = document.querySelectorAll('.terminal-body:not(#typewriter-text)');
-  terminalElements.forEach(terminal => {
-    const originalText = terminal.textContent;
-    terminal.textContent = '';
-    
-    let i = 0;
-    function typeWriter() {
-      if (i < originalText.length) {
-        terminal.textContent += originalText.charAt(i);
-        i++;
-        setTimeout(typeWriter, Math.random() * 50 + 20);
-      } else {
-        const cursor = document.createElement('span');
-        cursor.className = 'cursor';
-        terminal.appendChild(cursor);
-      }
-    }
-    
-    typeWriter();
-  });
-  
-  // Create matrix code animation
-  const matrixCode = document.querySelector('.matrix-code');
-  if (matrixCode) {
-    const characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-    const columnCount = Math.floor(matrixCode.offsetWidth / 20);
-    
-    for (let i = 0; i < columnCount; i++) {
-      const column = document.createElement('div');
-      column.className = 'code-column';
-      column.style.left = `${(i * 100) / columnCount}%`;
-      column.style.animationDuration = `${Math.random() * 10 + 10}s`;
-      column.style.animationDelay = `${Math.random() * 5}s`;
-      
-      const columnHeight = Math.floor(Math.random() * 20 + 10);
-      for (let j = 0; j < columnHeight; j++) {
-        const character = document.createElement('div');
-        character.textContent = characterSet.charAt(Math.floor(Math.random() * characterSet.length));
-        character.style.opacity = j === 0 ? '1' : `${1 - (j / columnHeight)}`;
-        character.style.animationDelay = `${j * 0.1}s`;
-        column.appendChild(character);
-      }
-      
-      matrixCode.appendChild(column);
-    }
-  }
-  
-  // Create binary animation for footer
-  const binaryOverlay = document.querySelector('.binary-overlay');
-  if (binaryOverlay) {
-    const maxStrings = 20;
-    for (let i = 0; i < maxStrings; i++) {
-      const binaryString = document.createElement('div');
-      binaryString.className = 'binary-string';
-      
-      // Random binary string
-      let string = '';
-      const length = Math.floor(Math.random() * 20) + 10;
-      for (let j = 0; j < length; j++) {
-        string += Math.round(Math.random());
-      }
-      binaryString.textContent = string;
-      
-      // Random position and animation
-      binaryString.style.left = `${Math.random() * 100}%`;
-      binaryString.style.opacity = `${Math.random() * 0.5 + 0.1}`;
-      binaryString.style.animationDuration = `${Math.random() * 10 + 5}s`;
-      binaryString.style.animationDelay = `${Math.random() * 5}s`;
-      
-      binaryOverlay.appendChild(binaryString);
-    }
-  }
-  
-  // Create data points for skills animation
-  const skillsAnimation = document.querySelector('.skills-animation');
-  if (skillsAnimation) {
-    function createDataPoint() {
-      const progressBars = skillsAnimation.querySelectorAll('.progress-bar');
-      if (progressBars.length === 0) return;
-      
-      const randomBar = progressBars[Math.floor(Math.random() * progressBars.length)];
-      const dataPoint = document.createElement('div');
-      dataPoint.className = 'data-point';
-      
-      const percentValue = parseInt(randomBar.style.width || '0%');
-      const positionX = Math.min(percentValue, 100) + '%';
-      
-      dataPoint.style.left = positionX;
-      randomBar.parentNode.appendChild(dataPoint);
-      
-      setTimeout(() => {
-        if (dataPoint.parentNode) {
-          dataPoint.parentNode.removeChild(dataPoint);
-        }
-      }, 2000);
-    }
-    
-    setInterval(createDataPoint, 500);
-    
-    // Trigger data-flow animation on scroll
-    const progressWrappers = document.querySelectorAll('.progress-bar-wrap');
-    function triggerAnimation(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('data-flow');
-          setTimeout(() => {
-            entry.target.classList.remove('data-flow');
-          }, 2000);
-        }
-      });
-    }
-    
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(triggerAnimation, {
-        threshold: 0.5
-      });
-      
-      progressWrappers.forEach(wrapper => {
-        observer.observe(wrapper);
-      });
-    }
-  }
+  // Initialize dark theme specific animations and effects
+  initializeParticles();
+  initializeMatrixEffect();
+  initializeGlowEffects();
 });
+
+function initializeParticles() {
+  if (document.getElementById('particles-js')) {
+    particlesJS('particles-js', particlesConfig);
+  }
+}
+
+function initializeMatrixEffect() {
+  const matrixElements = document.querySelectorAll('.matrix-code');
+  matrixElements.forEach(element => {
+    createMatrixEffect(element);
+  });
+}
+
+function createMatrixEffect(element) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const columns = Math.floor(element.offsetWidth / 20);
+  const rows = Math.floor(element.offsetHeight / 20);
+
+  for (let i = 0; i < columns; i++) {
+    const column = document.createElement('div');
+    column.className = 'code-column';
+    
+    for (let j = 0; j < rows; j++) {
+      const char = document.createElement('span');
+      char.textContent = characters[Math.floor(Math.random() * characters.length)];
+      column.appendChild(char);
+    }
+    
+    element.appendChild(column);
+  }
+}
+
+function initializeGlowEffects() {
+  // Add glow effects to tech cards
+  const techCards = document.querySelectorAll('.tech-card');
+  techCards.forEach(card => {
+    card.addEventListener('mousemove', handleGlowEffect);
+    card.addEventListener('mouseleave', removeGlowEffect);
+  });
+}
+
+function handleGlowEffect(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  card.style.setProperty('--x', `${x}px`);
+  card.style.setProperty('--y', `${y}px`);
+}
+
+function removeGlowEffect(e) {
+  const card = e.currentTarget;
+  card.style.setProperty('--x', '50%');
+  card.style.setProperty('--y', '50%');
+}
 
 /**
  * Creates animated circuit patterns in section backgrounds
