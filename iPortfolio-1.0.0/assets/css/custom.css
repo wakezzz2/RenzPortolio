@@ -6053,4 +6053,86 @@ body.dark-mode #certificationsCarousel .carousel-control-next:hover {
 .dark-mode .view-more-btn:hover {
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* Tech Modal Responsive Styles */
+@media (max-width: 768px) {
+  .tech-modal-body .row {
+    flex-direction: column;
+  }
+  
+  .tech-modal-body .col-md-6 {
+    width: 100%;
+  }
+  
+  .modal-img-container {
+    margin-bottom: 20px;
+  }
+  
+  .modal-content-container {
+    padding: 15px 0;
+  }
+  
+  .feature-list {
+    margin-bottom: 15px;
+  }
+  
+  .feature-list li {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  
+  .tech-stack-container {
+    margin-top: 15px;
+  }
+  
+  .tech-stack-container .tech-tags {
+    gap: 6px;
+  }
+  
+  .tech-stack-container .tech-tags span {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tech-modal-header {
+    padding: 15px;
+  }
+  
+  .tech-modal-header .modal-title {
+    font-size: 20px;
+  }
+  
+  .tech-modal-header .tech-tags span {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+  
+  .tech-modal-body {
+    padding: 20px;
+  }
+  
+  .modal-content-container h4 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .modal-content-container p {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  .tech-modal-footer {
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-github, .btn-demo {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
 }
